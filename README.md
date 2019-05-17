@@ -1,5 +1,9 @@
 # the-wing_minesweeper
 
+## Preview link
+https://minesweeper.thedoomshine.now.sh/
+![Minesweeper](https://raw.githubusercontent.com/thedoomshine/minesweeper/master/preview.png)
+
 ## Project setup
 ```
 yarn install
