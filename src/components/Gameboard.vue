@@ -8,12 +8,14 @@
       <div
         class="cell"
         v-for="(cell, x) in row"
-        :class="{ 'checked': cell.checked, 'exploded': cell.checked && cell.bomb }"
+        :class="{ 'checked': cell.checked, 'exploded': (cell.checked || gameOver) && cell.bomb }"
         :key="`Cell-${y},${x}`"
         @click="cellClick({ y, x })"
       >
-        <svg v-if="cell.checked && cell.bomb" class="icon icon-bomb"><use xlink:href="#icon-bomb"></use></svg>
-        <template v-if="cell.checked && !cell.bomb">
+        <svg v-if="(cell.checked || gameOver || cheat) && cell.bomb" class="icon icon-bomb">
+          <use xlink:href="#icon-bomb"></use>
+        </svg>
+        <template v-if="cell.checked && !cell.bomb && cell.count > 0">
           {{ cell.count }}
         </template>
       </div>
@@ -22,13 +24,17 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
   name: 'Gameboard',
 
   computed: {
-    board () { return this.$store.state.board },
-    newGame () { return this.$store.state.newGame },
-    gameOver() { return this.$store.state.gameOver },
+    ...mapState([
+      'board',
+      'cheat',
+      'gameOver',
+      'newGame'
+    ])
   },
 
   methods: {
@@ -44,7 +50,7 @@ export default {
     border: solid .5px var(--black);
     display: flex;
     flex-direction: column;
-    margin: auto;
+    margin: 4rem auto auto;
   }
 
   .row {

@@ -5,7 +5,7 @@
       <input
         type="text"
         placeholder="Player"
-        v-model="newPlayer"
+        v-model="player"
       />
     </div>
 
@@ -15,7 +15,7 @@
         type="range"
         min="0"
         max="2"
-        v-model="newDifficulty"
+        v-model="difficulty"
       />
     </div>
 
@@ -29,33 +29,44 @@
 export default {
   name: 'NewGame',
 
-  data () {
-    return {
-      newDifficulty: 0,
-      newPlayer: 'Player'
-    }
-  },
-
   computed: {
-    player () {
-      return this.$store.state.player
+    difficulty: {
+      get () {
+        return this.$store.state.difficulty
+      },
+      set (value) {
+        this.setDifficulty(value)
+      }
     },
     difficultyText () {
-      const difficulty = this.newDifficulty
-      const choices = ['Easy', 'Medium', 'Hard']
+      const difficulty = this.difficulty
+      const choices = ['Easy (8x8)', 'Medium (16x16)', 'Hard (24x24)']
       return choices[difficulty]
     },
-    newGame () {
-      return this.$store.state.newGame
-    }
+    player: {
+      get () {
+        return this.$store.state.player
+      },
+      set (value) {
+        this.setPlayer(value)
+      }
+    },
   },
 
   methods: {
-    startGame () {
-      this.$store.dispatch('START_GAME', {
-        player: this.newPlayer,
-        difficulty: this.newDifficulty
+    setDifficulty(value) {
+      this.$store.commit('SET_DIFFICULTY', {
+        difficulty: value
       })
+      this.$store.commit('RESET_GAME_BOARD')
+    },
+    setPlayer(value) {
+      this.$store.commit('SET_PLAYER', {
+        player: value
+      })
+    },
+    startGame () {
+      this.$store.dispatch('START_GAME')
     }
   }
 }

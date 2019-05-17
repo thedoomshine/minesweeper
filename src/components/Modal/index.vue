@@ -27,9 +27,9 @@ export default {
   background-color: var(--white);
   box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
   max-width: 32rem;
-  padding: 2em;
+  padding: 1em 2em;
   position: fixed;
-  top: 20%;
+  bottom: 4rem;
   width: 100%;
 }
 </style>
