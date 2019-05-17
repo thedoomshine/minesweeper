@@ -1,7 +1,8 @@
-# the-wing_minesweeper
+# [ M I N E S W E E P E R ]
 
 ## Preview link
 https://minesweeper.thedoomshine.now.sh/
+
 ![Minesweeper](https://raw.githubusercontent.com/thedoomshine/minesweeper/master/preview.png)
 
 ## Project setup
