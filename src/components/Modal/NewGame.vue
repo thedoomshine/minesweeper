@@ -40,7 +40,7 @@ export default {
     },
     difficultyText () {
       const difficulty = this.difficulty
-      const choices = ['Easy (8x8)', 'Medium (16x16)', 'Hard (24x24)']
+      const choices = ['Beginner (8x8)', 'Intermediate (16x16)', 'Expert (24x24)']
       return choices[difficulty]
     },
     player: {
@@ -55,15 +55,11 @@ export default {
 
   methods: {
     setDifficulty(value) {
-      this.$store.commit('SET_DIFFICULTY', {
-        difficulty: value
-      })
-      this.$store.commit('RESET_GAME_BOARD')
+      this.$store.commit('SET_DIFFICULTY', value)
+      this.$store.commit('GENERATE_GAME_BOARD', this.$store.getters)
     },
     setPlayer(value) {
-      this.$store.commit('SET_PLAYER', {
-        player: value
-      })
+      this.$store.commit('SET_PLAYER', value)
     },
     startGame () {
       this.$store.dispatch('START_GAME')

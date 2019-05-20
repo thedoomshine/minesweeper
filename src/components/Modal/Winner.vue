@@ -1,30 +1,24 @@
 <template>
   <form v-on:submit.prevent="restartGame">
-    <h1>GAME OVER</h1>
+    <h1>YOU WIN!</h1>
     <p>Your Final Score:</p>
     <h2>{{ score }}</h2>
 
-    <button @click="restartGame">
+    <button>
       Play Again?
     </button>
   </form>
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 export default {
-  name: 'GameOver',
-
+  name: 'NewGame',
   computed: {
     ...mapGetters([
-      'score',
-    ]),
-    ...mapState([
-      'difficulty',
-      'player'
-    ]),
+      'score'
+    ])
   },
-
   methods: {
     restartGame () {
       this.$store.dispatch('RESTART_GAME')
@@ -37,12 +31,6 @@ export default {
 form {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1rem;
-  margin-top: auto;
-}
-
-.input-range {
-  margin-top: 2rem;
 }
 
 button {

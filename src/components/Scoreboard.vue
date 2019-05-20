@@ -1,7 +1,11 @@
 <template>
   <div class="scoreboard">
     <h2 class="player-name">{{ player }}</h2>
-    <button class="cheat-button">
+    <button
+      :class="['cheat-button', cheat ? 'cheat': null]"
+      @mousedown="clickCheat(true)"
+      @mouseup="clickCheat(false)"
+    >
       <svg class="icon icon-pirate">
         <use xlink:href="#icon-pirate"></use>
       </svg>
@@ -11,15 +15,23 @@
 </template>
 
 <script>
+import { mapGetters, mapState } from 'vuex';
 export default {
   name: 'Scoreboard',
 
   computed: {
-    player () {
-      return this.$store.state.player
-    },
-    score () {
-      return this.$store.state.score
+    ...mapGetters([
+      'score',
+    ]),
+    ...mapState([
+      'cheat',
+      'player',
+    ])
+  },
+
+  methods: {
+    clickCheat (bool) {
+      this.$store.dispatch('CHEAT_CLICKED', bool)
     }
   }
 }
@@ -27,6 +39,7 @@ export default {
 
 <style lang="scss" scoped>
   .scoreboard {
+    align-items: center;
     display: flex;
     justify-content: space-between;
     max-width: 24rem;
@@ -58,8 +71,16 @@ export default {
     flex-basis: 1/3;
     flex-grow: 1;
     flex-shrink: 1;
-    font-size: 2rem;
+    font-size: 3rem;
     margin: 0;
-    padding: 0;
+    padding: .25rem;
+
+    &:hover {
+      color: var(--grey);
+    }
+
+    &.cheat {
+      color: var(--red);
+    }
   }
 </style>

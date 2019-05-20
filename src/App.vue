@@ -2,7 +2,7 @@
   <div id="app">
     <Scoreboard />
 
-    <Modal v-if="newGame || gameOver" />
+    <Modal v-if="newGame || gameOver || winner" />
 
     <Gameboard />
 
@@ -16,6 +16,8 @@ import Gameboard from '@/components/Gameboard'
 import Scoreboard from '@/components/Scoreboard'
 import Modal from '@/components/Modal'
 
+import { mapState, mapGetters } from 'vuex'
+
 export default {
   name: 'app',
   components: {
@@ -25,9 +27,40 @@ export default {
     Modal
   },
 
+  mounted () {
+    this.$store.dispatch('RESTART_GAME')
+    window.addEventListener('keydown', this.handleKeydown, { once: true })
+  },
+
+  beforeDestroy() {
+    window.removeEventListener('keydown', this.handleKeydown)
+  },
+
   computed: {
-    newGame () { return this.$store.state.newGame },
-    gameOver() { return this.$store.state.gameOver },
+    ...mapGetters([
+      'winner'
+    ]),
+    ...mapState([
+      'gameOver',
+      'newGame'
+    ])
+  },
+
+  methods: {
+    handleKeydown(event) {
+      window.addEventListener('keyup', this.handleKeyup, { once: true })
+      this.handleKeypress(event, true)
+    },
+    handleKeyup(event) {
+      window.addEventListener('keydown', this.handleKeydown, { once: true })
+      this.handleKeypress(event, false)
+    },
+    handleKeypress(event, bool) {
+      if (event.key === ' ' && this.cheat !== bool) this.clickCheat(bool)
+    },
+    clickCheat (bool) {
+      this.$store.dispatch('CHEAT_CLICKED', bool)
+    }
   }
 }
 </script>
@@ -87,11 +120,14 @@ export default {
   }
 
   button {
+    align-items: center;
     background-color: var(--black);
+    border: none;
     color: var(--white);
     cursor: pointer;
-    border: none;
+    display: flex;
     font: inherit;
+    justify-content: center;
     padding: .5em 1em;
     margin-left: auto;
     margin-right: 0;

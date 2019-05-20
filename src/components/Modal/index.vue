@@ -1,23 +1,32 @@
 <template>
   <div class="modal">
     <NameGame v-if="newGame"/>
-    <GameOver v-else />
+    <Winner v-else-if="winner" />
+    <GameOver v-else-if="gameOver" />
   </div>
 </template>
 
 <script>
 import GameOver from './GameOver'
 import NameGame from './NewGame'
+import Winner from './Winner'
+
+import { mapGetters, mapState } from 'vuex';
 export default {
   name: 'Modal',
   components: {
     GameOver,
-    NameGame
+    NameGame,
+    Winner
   },
   computed: {
-    newGame () {
-      return this.$store.state.newGame
-    }
+    ...mapGetters([
+      'winner'
+    ]),
+    ...mapState([
+      'gameOver',
+      'newGame'
+    ])
   }
 }
 </script>
