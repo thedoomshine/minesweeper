@@ -1,5 +1,5 @@
 <template>
-  <form v-on:submit.prevent="restartGame">
+  <form @submit.prevent="restartGame" @keyup.space="restartGame">
     <h1>GAME OVER</h1>
     <p>Your Final Score:</p>
     <h2>{{ score }}</h2>

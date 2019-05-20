@@ -67,10 +67,10 @@ export default {
 
     &:nth-child(even) .cell:nth-child(odd):not(.checked):not(.exploded),
     &:nth-child(odd) .cell:nth-child(even):not(.checked):not(.exploded) {
-      background-color: var(--black);
+      background-color: var(--ltgrey);
 
       &:hover {
-        background-color: var(--ltgrey);
+        background-color: var(--black);
       }
     }
   }
@@ -86,7 +86,7 @@ export default {
     justify-content: center;
     width: 2em;
     &:hover {
-      background-color: var(--ltgrey);
+      background-color: var(--black);
     }
 
     &.checked {
